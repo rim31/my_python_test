@@ -18,50 +18,90 @@ def getLhs(str):
     return lhs[0]
 
 def discriminant(a, b, c):#ax2 +bx +c = 0
-    disc = b * b - 4 * a * c
-    print disc
-    print str(a) + " * X^2 + " + str(b) + " * X^1 + " + str(c) +" * X^0 = 0 "
-    if a == 0 & b == 0 & c == 0:
-        print "infinite de solution "
+
+    string = "Reduced form : "
+
+    if c != 0:
+        string += str(c) + " * X^0"
+    if b != 0:
+        if c != 0:
+            string += (" + " if b > 0 else " - ")
+        string += str(math.fabs(b)) + " * X^1"
+    if a != 0:
+        if b != 0 or c != 0:
+            string += (" + " if a > 0 else " - ")
+        string += str(math.fabs(a)) + " * X^2"
+
+    if a == 0 and b == 0 and c == 0:
+        print string + "0 = 0\ninfinite de solutions "
+    elif a == 0 and b == 0 and c != 0:
+        print string + " = 0"
+        print "impossible ??"
     elif a == 0:
-        print "equation du 1er degre "
+    # if a == 0:
+        print string + " = 0"
+        print "Polynomial degree: 1"
         print "soution X = " + str(-c/b)
-    elif disc > 0:
-        print "discriminant > 0 :  2 resultats "
-        res1 = (-b - math.sqrt(disc))/ ( 2 * a)
-        res2 = (-b + math.sqrt(disc))/ ( 2 * a)
-        print "X1 = " + str(res1)
-        print "X2 = " + str(res2)
-    elif disc == 0:
-        print "discriminant = 0 :  1 resultat"
-        res1 = -b / ( 2 * a)
-    else:
-        print "discriminant < 0 :  2 resultats imaginaires ou pas de resultat"
-        res1 = -b / (2*a)
-        res1i = math.sqrt(math.fabs(disc)) / (2*a)
-        print "X1 : " + str(res1) + " + i" + str(res1)
-        res2 = -b / (2*a)
-        res2i = -math.sqrt(math.fabs(disc)) / (2*a)
-        print "X1 : " + str(res2) + " + i" + str(res2)
+
+    if a != 0:
+        disc = b * b - 4 * a * c
+        print string + " = 0"
+        print "Polynomial degree: 2"
+        if disc > 0:
+            print "discriminant > 0 :  2 resultats "
+            res1 = (-b - math.sqrt(disc))/ ( 2 * a)
+            res2 = (-b + math.sqrt(disc))/ ( 2 * a)
+            print "X1 = " + str(res1)
+            print "X2 = " + str(res2)
+        elif disc == 0:
+            print "discriminant = 0 :  1 resultat"
+            print "X : " + str(-b / ( 2 * a))
+        else:
+            print "discriminant < 0 :  2 resultats imaginaires ou pas de resultat"
+            res1 = -b / (2*a)
+            res1i = math.sqrt(math.fabs(disc)) / (2*a)
+            print "X1 : " + str(res1) + " + i" + str(res1)
+            res2 = -b / (2*a)
+            res2i = -math.sqrt(math.fabs(disc)) / (2*a)
+            print "X1 : " + str(res2) + " + i" + str(res2)
 
 
 def parse(lhs, rhs):
-    print lhs + ", " + rhs
+    # print lhs + ", " + rhs
 
     # eqtest = re.findall(r'([+-]*([\-\+]?[\ +-]?[0-9]*(\.[0-9]+)?)\ \* X\^\d+.\d+)', av)
     coef1 = re.findall(r'((?<!\^)[+-]?\ ?(\d)+\.?(\d?)+)', lhs)
     coef2 = re.findall(r'((?<!\^)[+-]?\ ?(\d)+\.?(\d?)+)', rhs)
 
 #ax2 +bx +c = 0
-    c = float(coef1[0][0].replace(" ","")) - float(coef2[0][0].replace(" ",""))
-    b = float(coef1[1][0].replace(" ",""))
-    a = float(coef1[2][0].replace(" ",""))
+
+    # print (len(coef1))
+    # print (len(coef2))
+
+    lenC = len(coef1)
+
+    if lenC > 3:
+        print "erreur equation du 3nd degre"
+    elif lenC > 0:
+        a = 0
+        b = 0
+        c = float(coef1[0][0].replace(" ","")) - float(coef2[0][0].replace(" ",""))
+        if lenC > 1:
+            b = float(coef1[1][0].replace(" ",""))
+        if len(coef2) > 1:
+            b -= float(coef2[1][0].replace(" ",""))
+        if lenC > 2:
+            a = float(coef1[2][0].replace(" ",""))
+        if len(coef2) > 2:
+            a -= float(coef2[2][0].replace(" ",""))
+        discriminant(a, b, c)
+
     # if coef1[3][0]:
     #     print "erreur equation du 3nd degre"
     # else:
     #     discriminant(a, b, c)
-
-    discriminant(a, b, c)
+    #
+    # discriminant(a, b, c)
 
 
 #======================MAIN=========================
