@@ -60,10 +60,10 @@ def discriminant(a, b, c):#ax2 +bx +c = 0
             print "discriminant < 0 :  2 resultats imaginaires ou pas de resultat"
             res1 = -b / (2*a)
             res1i = math.sqrt(math.fabs(disc)) / (2*a)
-            print "X1 : " + str(res1) + " + i" + str(res1)
+            print "X1 : " + str(res1) + (" + " if res1i > 0 else " - ") + str(math.fabs(res1i)) + "i"
             res2 = -b / (2*a)
             res2i = -math.sqrt(math.fabs(disc)) / (2*a)
-            print "X1 : " + str(res2) + " + i" + str(res2)
+            print "X2 : " + str(res2) + (" + " if res2i > 0 else " - ") + str(math.fabs(res2i)) + "i"
 
 
 def parse(lhs, rhs):
@@ -79,22 +79,52 @@ def parse(lhs, rhs):
     # print (len(coef2))
 
     lenC = len(coef1)
+    lenC2 = len(coef2)
 
-    if lenC > 3:
-        print "erreur equation du 3nd degre"
-    elif lenC > 0:
-        a = 0
-        b = 0
-        c = float(coef1[0][0].replace(" ","")) - float(coef2[0][0].replace(" ",""))
-        if lenC > 1:
-            b = float(coef1[1][0].replace(" ",""))
-        if len(coef2) > 1:
-            b -= float(coef2[1][0].replace(" ",""))
-        if lenC > 2:
-            a = float(coef1[2][0].replace(" ",""))
-        if len(coef2) > 2:
-            a -= float(coef2[2][0].replace(" ",""))
-        discriminant(a, b, c)
+    tabC = []
+    tabC2 = []
+
+    tabCoeff = [0, 0, 0]
+
+    maxLen = lenC if lenC > lenC2 else lenC2
+
+    for i in range(0, maxLen):
+        if i < lenC:
+            tabC.append(float(coef1[i][0].replace(" ","")))
+        else:
+            tabC.append(0)
+        if i < lenC2:
+            tabC2.append(float(coef2[i][0].replace(" ","")))
+        else:
+            tabC2.append(0)
+        if i > 2:
+            tabCoeff.append(tabC[i] - tabC2[i])
+        else:
+            tabCoeff[i] = tabC[i] - tabC2[i]
+
+    # print tabC
+    # print tabC2
+    # print tabCoeff
+
+    discriminant(tabCoeff[2], tabCoeff[1], tabCoeff[0])
+
+    # while ()
+
+    # if lenC > 3:
+
+    # if lenC > 0:
+    #     a = 0
+    #     b = 0
+    #     c = float(coef1[0][0].replace(" ","")) - float(coef2[0][0].replace(" ",""))
+    #     if lenC > 1:
+    #         b = float(coef1[1][0].replace(" ",""))
+    #     if len(coef2) > 1:
+    #         b -= float(coef2[1][0].replace(" ",""))
+    #     if lenC > 2:
+    #         a = float(coef1[2][0].replace(" ",""))
+    #     if len(coef2) > 2:
+    #         a -= float(coef2[2][0].replace(" ",""))
+    #     discriminant(a, b, c)
 
     # if coef1[3][0]:
     #     print "erreur equation du 3nd degre"
