@@ -17,6 +17,18 @@ def getLhs(str):
     lhs = re.findall(r'=(.*)', str)
     return lhs[0]
 
+def reduce3(tabCoeff):#ax^n +bx^n-1 +c...
+    string = "Reduced form : "
+    debut = 0
+    for i in range(0, len(tabCoeff)):
+        if i > 0:
+            string += (" + " if tabCoeff[i] > 0 else " - ")
+        string += str(tabCoeff[i]) + " * X^" + str(i)
+    print string + " = 0"
+    print "Polynomial degree: " + str(len(tabCoeff) - 1)
+
+
+
 def discriminant(a, b, c):#ax2 +bx +c = 0
 
     string = "Reduced form : "
@@ -38,7 +50,6 @@ def discriminant(a, b, c):#ax2 +bx +c = 0
         print string + " = 0"
         print "impossible ??"
     elif a == 0:
-    # if a == 0:
         print string + " = 0"
         print "Polynomial degree: 1"
         print "soution X = " + str(-c/b)
@@ -68,22 +79,15 @@ def discriminant(a, b, c):#ax2 +bx +c = 0
 
 def parse(lhs, rhs):
     # print lhs + ", " + rhs
-
-    # eqtest = re.findall(r'([+-]*([\-\+]?[\ +-]?[0-9]*(\.[0-9]+)?)\ \* X\^\d+.\d+)', av)
     coef1 = re.findall(r'((?<!\^)[+-]?\ ?(\d)+\.?(\d?)+)', lhs)
     coef2 = re.findall(r'((?<!\^)[+-]?\ ?(\d)+\.?(\d?)+)', rhs)
 
-#ax2 +bx +c = 0
+#ax2 +bx +c = 0 # print (len(coef1)) # print (len(coef2))
 
-    # print (len(coef1))
-    # print (len(coef2))
-
-    lenC = len(coef1)
-    lenC2 = len(coef2)
-
+    # lenC = len(coef1)
+    # lenC2 = len(coef2)
     tabC = []
     tabC2 = []
-
     tabCoeff = [0, 0, 0]
 
     maxLen = lenC if lenC > lenC2 else lenC2
@@ -106,7 +110,10 @@ def parse(lhs, rhs):
     # print tabC2
     # print tabCoeff
 
-    discriminant(tabCoeff[2], tabCoeff[1], tabCoeff[0])
+    if maxLen > 2:
+        reduce3(tabCoeff)
+    else:
+        discriminant(tabCoeff[2], tabCoeff[1], tabCoeff[0])
 
     # while ()
 
