@@ -27,3 +27,8 @@ or
 python computor.py
 -1 * X^0 -0.42 * X^1 + 3 * X^2 + 2 * X^3 = -5 *X^0 + 3 * X^1
 ```
+
+![alt text](https://github.com/rim31/my_python_test/blob/master/ScreenShot1.png)
+
+![alt text](https://github.com/rim31/my_python_test/blob/master/ScreenShot2.png)
+
